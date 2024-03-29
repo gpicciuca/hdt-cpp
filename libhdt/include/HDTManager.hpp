@@ -37,6 +37,7 @@
 #include "HDTListener.hpp"
 
 #include <string>
+#include <memory>
 
 namespace hdt {
 
@@ -49,7 +50,7 @@ public:
 	/**
 	 * Reads an HDT file into main memory.
 	 */
-	static HDT *loadHDT(const char *file, ProgressListener *listener=NULL);
+	static std::unique_ptr<HDT> loadHDT(const char *file, ProgressListener *listener=NULL);
 
 	/**
 	 * Load an HDT File, and load/create additional indexes to support all kind of queries efficiently.
@@ -58,17 +59,17 @@ public:
 	 * @return
 	 * @throws IOException
 	 */
-	static HDT *loadIndexedHDT(const char *hdtFileName, ProgressListener *listener=NULL);
+	static std::unique_ptr<HDT> loadIndexedHDT(const char *hdtFileName, ProgressListener *listener=NULL);
 
 	/**
 	 * Maps an HDT file. Faster to load, uses less memory, but may result in delays at access time.
 	 */
-	static HDT *mapHDT(const char *file, ProgressListener *listener=NULL);
+	static std::unique_ptr<HDT> mapHDT(const char *file, ProgressListener *listener=NULL);
 
 	/**
 	 * Maps an HDT file and load/generate additional indexes to solve efficiently all queries.
 	 */
-	static HDT *mapIndexedHDT(const char *file, ProgressListener *listener=NULL);
+	static std::unique_ptr<HDT> mapIndexedHDT(const char *file, ProgressListener *listener=NULL);
 
 	/**
 	 * Return an indexed HDT that is efficient for all kind of queries, given a (possibly) not indexed HDT.
@@ -76,7 +77,7 @@ public:
 	 * @param listener Listener to get notified of loading progress. Can be null if no notifications needed.
 	 * @return
 	 */
-	static HDT *indexedHDT(HDT *hdt, ProgressListener *listener=NULL);
+	static void indexedHDT(HDT *hdt, ProgressListener *listener=NULL);
 
 	/**
 	 * Create an HDT file from an RDF file.
@@ -89,7 +90,7 @@ public:
 	 * @throws IOException
 	 * @throws ParserException
 	 */
-	static HDT *generateHDT(const char *rdfFileName, const char *baseURI, RDFNotation rdfNotation, HDTSpecification &hdtFormat, ProgressListener *listener=NULL);
+	static std::unique_ptr<HDT> generateHDT(const char *rdfFileName, const char *baseURI, RDFNotation rdfNotation, HDTSpecification &hdtFormat, ProgressListener *listener=NULL);
 };
 }
 

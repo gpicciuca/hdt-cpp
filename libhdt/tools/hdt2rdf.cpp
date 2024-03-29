@@ -118,7 +118,7 @@ int main(int argc, char **argv) {
 
 	try {
 		ProgressListener* progress = showProgress ? new StdoutProgressListener() : NULL;
-		HDT *hdt = HDTManager::mapHDT(inputFile.c_str(), progress);
+		auto hdt = HDTManager::mapHDT(inputFile.c_str(), progress);
 
 		if(outputFile!="-") {
 			RDFSerializer *serializer = RDFSerializer::getSerializer(outputFile.c_str(), notation);
@@ -129,7 +129,6 @@ int main(int argc, char **argv) {
 			hdt->saveToRDF(*serializer);
 			delete serializer;
 		}
-		delete hdt;
 		delete progress;
 	} catch (std::exception& e) {
 		cerr << "ERROR: " << e.what() << endl;

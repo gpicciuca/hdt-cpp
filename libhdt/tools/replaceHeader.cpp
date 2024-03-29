@@ -42,7 +42,7 @@ int main(int argc, char **argv) {
 
 	try {
 		// LOAD
-		HDT *hdt = HDTManager::mapHDT(inputFile);
+		auto hdt = HDTManager::mapHDT(inputFile);
 
 		// Replace header
 		Header *head= hdt->getHeader();
@@ -59,7 +59,6 @@ int main(int argc, char **argv) {
 		// SAVE
 		hdt->saveToHDT(outputFile);
 
-		delete hdt;
 	} catch (std::exception& e) {
 		cerr << "ERROR: " << e.what() << endl;
 		return 1;

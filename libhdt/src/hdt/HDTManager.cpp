@@ -29,26 +29,27 @@
 #include <HDTVocabulary.hpp>
 #include <HDTManager.hpp>
 #include "BasicHDT.hpp"
+#include <memory>
 
 using namespace hdt;
 
 
 namespace hdt {
 
-HDT *HDTManager::loadHDT(const char *file, ProgressListener *listener){
-	BasicHDT *h = new BasicHDT();
+std::unique_ptr<HDT> HDTManager::loadHDT(const char *file, ProgressListener *listener){
+	auto h{std::make_unique<BasicHDT>()};
     h->loadFromHDT(file, listener);
 	return h;
 }
 
-HDT *HDTManager::mapHDT(const char *file, ProgressListener *listener){
-    BasicHDT *h = new BasicHDT();
+std::unique_ptr<HDT> HDTManager::mapHDT(const char *file, ProgressListener *listener){
+    auto h{std::make_unique<BasicHDT>()};
     h->mapHDT(file, listener);
 	return h;
 }
 
-HDT *HDTManager::mapIndexedHDT(const char *file, ProgressListener *listener){
-    BasicHDT *h = new BasicHDT();
+std::unique_ptr<HDT> HDTManager::mapIndexedHDT(const char *file, ProgressListener *listener){
+    auto h{std::make_unique<BasicHDT>()};
     IntermediateListener iListener(listener);
     iListener.setRange(0,10);
     h->mapHDT(file, &iListener);
@@ -58,8 +59,8 @@ HDT *HDTManager::mapIndexedHDT(const char *file, ProgressListener *listener){
 	return h;
 }
 
-HDT *HDTManager::loadIndexedHDT(const char *file, ProgressListener *listener){
-	BasicHDT *h = new BasicHDT();
+std::unique_ptr<HDT> HDTManager::loadIndexedHDT(const char *file, ProgressListener *listener){
+	auto h{std::make_unique<BasicHDT>()};
     IntermediateListener iListener(listener);
     iListener.setRange(0,50);
 	h->loadFromHDT(file, listener);
@@ -69,14 +70,13 @@ HDT *HDTManager::loadIndexedHDT(const char *file, ProgressListener *listener){
 	return h;
 }
 
-HDT *HDTManager::indexedHDT(HDT *hdt, ProgressListener *listener){
+void HDTManager::indexedHDT(HDT* hdt, ProgressListener *listener){
 	BasicHDT *bhdt = dynamic_cast<BasicHDT*>(hdt);
 	bhdt->loadOrCreateIndex(listener);
-	return bhdt;
 }
 
-HDT *HDTManager::generateHDT(const char *rdfFileName, const char *baseURI, RDFNotation rdfNotation, HDTSpecification &hdtFormat, ProgressListener *listener){
-	BasicHDT *hdt = new BasicHDT(hdtFormat);
+std::unique_ptr<HDT> HDTManager::generateHDT(const char *rdfFileName, const char *baseURI, RDFNotation rdfNotation, HDTSpecification &hdtFormat, ProgressListener *listener){
+	auto hdt{std::make_unique<BasicHDT>(hdtFormat)};
 	hdt->loadFromRDF(rdfFileName, baseURI, rdfNotation, listener);
 	return hdt;
 }

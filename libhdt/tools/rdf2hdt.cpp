@@ -214,7 +214,7 @@ int main(int argc, char **argv) {
 		StopWatch globalTimer;
 
 		ProgressListener* progress = showProgress ? new StdoutProgressListener() : NULL;
-		HDT *hdt = HDTManager::generateHDT(inputFile.c_str(), baseUri.c_str(), notation, spec, progress);
+		auto hdt = HDTManager::generateHDT(inputFile.c_str(), baseUri.c_str(), notation, spec, progress);
 
 		ofstream out;
 
@@ -229,10 +229,9 @@ int main(int argc, char **argv) {
 		vout << ")  System(" << globalTimer.getSystemStr() << ")" << endl;
 
 		if(generateIndex) {
-			hdt = HDTManager::indexedHDT(hdt, progress);
+			HDTManager::indexedHDT(hdt.get(), progress);
 		}
 
-		delete hdt;
 		delete progress;
 	} catch (std::exception& e) {
 		cerr << "ERROR: " << e.what() << endl;
