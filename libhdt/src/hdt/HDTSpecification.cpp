@@ -59,11 +59,17 @@ void HDTSpecification::setOptions(const std::string& options) {
 	}
 }
 
-const std::string& HDTSpecification::get(const std::string& key) {
-	return map.at(key);
-}
-
 const std::string emptyString = "";
+
+const std::string& HDTSpecification::get(const std::string& key) {
+	auto it = map.find(key);
+
+	if (it == map.end()) {
+		return emptyString;
+	}
+
+	return it->second;
+}
 
 const std::string& HDTSpecification::getOrEmpty(const std::string& key) {
 
