@@ -75,11 +75,14 @@ private:
 		size_t i=bitPos/W;
 		size_t j=bitPos%W;
 		size_t result;
+		size_t value{};
+		memcpy(&value, &data[i], sizeof(value));
 		if (j+bitsField <= W) {
-			result = (data[i] << (W-j-bitsField)) >> (W-bitsField);
+			result = (value << (W-j-bitsField)) >> (W-bitsField);
 		} else {
-			result = data[i] >> j;
-			result = result | (data[i+1] << ( (W<<1) -j-bitsField)) >> (W-bitsField);
+			result = value >> j;
+			memcpy(&value, &data[i+1], sizeof(value));
+			result = result | (value << ( (W<<1) -j-bitsField)) >> (W-bitsField);
 		}
 		return result;
 	}

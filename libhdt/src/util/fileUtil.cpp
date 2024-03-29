@@ -187,6 +187,7 @@ DecompressStream::DecompressStream(const char *fileName) : in(NULL), filePipe(NU
 		#ifdef HAVE_LIBZ
 			in = gzStream = new igzstream(fileName);
 		#else
+			close();
 			throw std::runtime_error("Support for GZIP was not compiled in this version. Please Decompress the file before importing it.");
 		#endif
 	}
@@ -206,6 +207,7 @@ DecompressStream::DecompressStream(const char *fileName) : in(NULL), filePipe(NU
 	if(pipeCommand.length()>0) {
 		pipeCommand.append(fileName);
 		if ((filePipe=popen(pipeCommand.c_str(),"r")) == NULL) {
+			close();
 			cerr << "Error creating pipe for command " << pipeCommand << endl;
 			throw std::runtime_error("popen() failed to create pipe");
 		}
@@ -217,20 +219,36 @@ DecompressStream::DecompressStream(const char *fileName) : in(NULL), filePipe(NU
 
 	if (!in->good())
 	{
+		close();
 		cerr << "Error opening file " << fileName << " for parsing " << endl;
 		throw std::runtime_error("Error opening file for parsing");
 	}
 #endif
 }
 
+DecompressStream::~DecompressStream() {
+	close();
+}
+
 void DecompressStream::close() {
-	if(fileStream) fileStream->close();
+	if(fileStream) {
+		fileStream->close();
+		fileStream = nullptr;
+	}
 #ifndef WIN32
-	if(filePipe) pclose(filePipe);
+	if(filePipe) {
+		pclose(filePipe);
+		filePipe = nullptr;
+	}
 #endif
 #ifdef HAVE_LIBZ
-	if(gzStream) gzStream->close();
+	if(gzStream) {
+		gzStream->close();
+		gzStream = nullptr;
+	}
 #endif
-	delete in;
-	in=NULL;
+	if (in) {
+		delete in;
+		in=NULL;
+	}
 }

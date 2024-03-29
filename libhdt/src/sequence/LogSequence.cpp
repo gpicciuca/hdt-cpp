@@ -29,7 +29,7 @@
  *
  */
 
-#ifdef HAVE_CSD
+#ifdef HAVE_CDS
 
 #include <libcdsBasics.h>
 #include <HDTVocabulary.hpp>
@@ -61,7 +61,7 @@ size_t LogSequence::get(size_t position)
 
 void LogSequence::add(IteratorUInt &elements)
 {
-    std::vector<size_t> vector;
+    std::vector<uint> vector;
     size_t max = 0;
 
 	while(elements.hasNext()) {
@@ -69,7 +69,7 @@ void LogSequence::add(IteratorUInt &elements)
 		if(element>((size_t)-1)) {
 			throw std::out_of_range("Error, saving a value out of range");
 		}
-        vector.push_back(element);
+        vector.push_back(static_cast<uint>(element));
 		max = element > max ? element : max;
 	}
 

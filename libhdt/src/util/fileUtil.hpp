@@ -61,6 +61,7 @@ private:
 
 public:
 	DecompressStream(const char *fileName);
+	~DecompressStream();
 	std::istream *getStream() {
 		return in;
 	}
