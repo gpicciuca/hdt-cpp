@@ -117,7 +117,7 @@ FileMap::FileMap(const char *fileName) : fd(0), ptr(NULL) {
 	}
 
 	// Mark as needed so the OS keeps as much as possible in memory
-    madvise((void*)ptr, mappedSize, MADV_WILLNEED);
+    posix_madvise((void*)ptr, mappedSize, POSIX_MADV_WILLNEED);
 
 #endif
 }
