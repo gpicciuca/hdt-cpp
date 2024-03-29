@@ -55,7 +55,7 @@ public:
 
     virtual void doParse(const char *fileName, const char *baseUri, RDFNotation notation, bool ignoreErrors, RDFCallback *callback)=0;
 
-	static RDFParserCallback *getParserCallback(RDFNotation notation);
+	static RDFParserCallback *getParserCallback(RDFNotation notation, const std::string& bnode_prefix);
 };
 
 class RDFParserPull: public IteratorTripleString {

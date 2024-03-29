@@ -143,7 +143,8 @@ private:
 
 #endif
 
-RDFParserSerd::RDFParserSerd() : numByte(0)
+RDFParserSerd::RDFParserSerd(const std::string& bnode_prefix)
+ : numByte(0), bnode_prefix(bnode_prefix)
 {
 }
 
@@ -184,6 +185,7 @@ void RDFParserSerd::doParse(const char *fileName, const char *baseUri, RDFNotati
 		NULL);
 
 	serd_reader_set_error_sink(reader, hdtserd_on_error, NULL);
+	serd_reader_add_blank_prefix(reader, (const uint8_t*)bnode_prefix.c_str());
 
 	const uint8_t* input=serd_uri_to_path((const uint8_t *)fileName);
 

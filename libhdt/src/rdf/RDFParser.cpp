@@ -12,14 +12,14 @@
 
 namespace hdt {
 
-RDFParserCallback *RDFParserCallback::getParserCallback(RDFNotation notation) {
+RDFParserCallback *RDFParserCallback::getParserCallback(RDFNotation notation, const std::string& bnode_prefix) {
 #ifdef HAVE_SERD
     if(notation==NQUAD || // Deprecated: use `NQUADS' instead.
        notation==NQUADS ||
        notation==NTRIPLES ||
        notation==TRIG ||
        notation==TURTLE) {
-        return new RDFParserSerd();
+        return new RDFParserSerd(bnode_prefix);
     }
 #else
 		throw ParseException("No Parser available for input RDF Format");

@@ -217,7 +217,7 @@ void BasicHDT::loadDictionary(const char* fileName, const char* baseUri, RDFNota
 		// Load data
 		DictionaryLoader dictLoader(dict, &iListener);
 
-		RDFParserCallback *parser = RDFParserCallback::getParserCallback(notation);
+		RDFParserCallback *parser = RDFParserCallback::getParserCallback(notation, spec.getOrEmpty("bnode.prefix"));
         parser->doParse(fileName, baseUri, notation, true, &dictLoader);
 		delete parser;
 
@@ -285,7 +285,7 @@ void BasicHDT::loadTriples(const char* fileName, const char* baseUri, RDFNotatio
 		TriplesLoader tripLoader(dictionary, triplesList, &iListener);
 
 		RDFParserCallback *pars = RDFParserCallback::getParserCallback(
-				notation);
+				notation, spec.getOrEmpty("bnode.prefix"));
 		pars->doParse(fileName, baseUri, notation, true, &tripLoader);
 		delete pars;
 		header->insert("_:statistics", HDTVocabulary::ORIGINAL_SIZE, tripLoader.getSize());

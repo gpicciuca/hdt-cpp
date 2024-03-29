@@ -20,13 +20,14 @@ private:
 	RDFCallback *callback;
 	string error;
 	uint64_t numByte;
+	std::string bnode_prefix;
 
 	string getString(const SerdNode *term);
 	string getStringObject(const SerdNode *term, const SerdNode *dataType, const SerdNode *lang);
 	SerdSyntax getParserType(RDFNotation notation);
 
 public:
-	RDFParserSerd();
+	RDFParserSerd(const std::string& bnode_prefix);
 	virtual ~RDFParserSerd();
 
 	void doParse(const char *fileName, const char *baseUri, RDFNotation notation, bool ignoreErrors, RDFCallback *callback);
