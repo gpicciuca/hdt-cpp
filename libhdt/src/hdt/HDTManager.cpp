@@ -42,6 +42,15 @@ std::unique_ptr<HDT> HDTManager::loadHDT(const char *file, ProgressListener *lis
 	return h;
 }
 
+std::unique_ptr<HDT> HDTManager::loadFromSeveralHDTInMemory(
+	const std::vector<std::pair<const char*, size_t>>& buffer_list, 
+	string baseUri, ProgressListener * listener)
+{
+	auto h{std::make_unique<BasicHDT>()};
+    h->loadFromSeveralHDT(buffer_list, baseUri, listener);
+	return h;
+}
+
 std::unique_ptr<HDT> HDTManager::mapHDT(const char *file, ProgressListener *listener){
     auto h{std::make_unique<BasicHDT>()};
     h->mapHDT(file, listener);
@@ -67,6 +76,18 @@ std::unique_ptr<HDT> HDTManager::loadIndexedHDT(const char *file, ProgressListen
 
 	iListener.setRange(50,100);
 	h->loadOrCreateIndex(listener);
+	return h;
+}
+
+std::unique_ptr<HDT> HDTManager::loadIndexedHDTFromMemory(const char *hdtBuffer, size_t hdtBufferLen, const char* hdtIndexBuffer, size_t hdtIndexBufferLen, ProgressListener *listener)
+{
+	auto h{std::make_unique<BasicHDT>()};
+    IntermediateListener iListener(listener);
+    iListener.setRange(0,50);
+	h->loadFromHDT(hdtBuffer, hdtBufferLen, listener);
+
+	iListener.setRange(50,100);
+	h->loadOrCreateIndex(hdtIndexBuffer, hdtIndexBufferLen, listener);
 	return h;
 }
 

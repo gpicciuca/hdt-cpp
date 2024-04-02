@@ -62,6 +62,35 @@ public:
 	static std::unique_ptr<HDT> loadIndexedHDT(const char *hdtFileName, ProgressListener *listener=NULL);
 
 	/**
+	 * Load an HDT File from memory, and load/create additional indexes to support all kind of queries efficiently.
+	 * @param hdtBuffer
+	 * @param hdtBufferLen
+	 * @param hdtIndexBuffer
+	 * @param hdtIndexBufferLen
+	 * @param listener Listener to get notified of loading progress. Can be null if no notifications needed.
+	 * @return
+	 * @throws IOException
+	 */
+	static std::unique_ptr<HDT> loadIndexedHDTFromMemory(
+		const char *hdtBuffer, 
+		size_t hdtBufferLen, 
+		const char* hdtIndexBuffer, 
+		size_t hdtIndexBufferLen,
+		ProgressListener *listener=NULL);
+
+	/**
+	 * Load multiple HDT Files stored in memory buffers, and load/create additional indexes to support all kind of queries efficiently.
+	 * @param buffer_list List of pairs <buffer_ptr, buffer_len>
+	 * @param baseUri 
+	 * @param listener 
+	 * @return 
+	 * @throws IOException
+	 */
+	static std::unique_ptr<HDT> loadFromSeveralHDTInMemory(
+		const std::vector<std::pair<const char*, size_t>>& buffer_list, 
+		string baseUri, ProgressListener * listener=NULL);
+
+	/**
 	 * Maps an HDT file. Faster to load, uses less memory, but may result in delays at access time.
 	 */
 	static std::unique_ptr<HDT> mapHDT(const char *file, ProgressListener *listener=NULL);

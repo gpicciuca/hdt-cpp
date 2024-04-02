@@ -36,6 +36,7 @@
 
 #include "../third/gzstream.h"
 #include "../third/fdstream.hpp"
+#include "../third/memstream.hpp"
 
 #include <HDTListener.hpp>
 
@@ -61,6 +62,7 @@ private:
 
 public:
 	DecompressStream(const char *fileName);
+	DecompressStream(const char *buffer, size_t len);
 	~DecompressStream();
 	std::istream *getStream() {
 		return in;

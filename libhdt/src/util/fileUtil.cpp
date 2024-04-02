@@ -226,6 +226,22 @@ DecompressStream::DecompressStream(const char *fileName) : in(NULL), filePipe(NU
 #endif
 }
 
+DecompressStream::DecompressStream(const char *buffer, size_t len) : in(NULL), filePipe(NULL), fileStream(NULL)
+{
+#ifdef HAVE_LIBZ
+	gzStream = NULL;
+#endif
+
+	in = new memstream(buffer, len);
+
+	if (!in->good())
+	{
+		close();
+		cerr << "Error creating memory stream for parsing " << endl;
+		throw std::runtime_error("Error creating memory stream for parsing");
+	}
+}
+
 DecompressStream::~DecompressStream() {
 	close();
 }
