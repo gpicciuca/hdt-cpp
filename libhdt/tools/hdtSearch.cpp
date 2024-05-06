@@ -1,9 +1,9 @@
 /*
- * File: HDTEnums.cpp
- * Last modified: $Date: 2012-08-13 23:00:07 +0100 (lun, 13 ago 2012) $
+ * File: hdtSearch.cpp
+ * Last modified: $Date$
  * Revision: $Revision: 222 $
- * Last modified by: $Author: mario.arias $
  *
+ * Copyright (C) 2024, Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
  * Copyright (C) 2012, Mario Arias, Javier D. Fernandez, Miguel A. Martinez-Prieto
  * All rights reserved.
  *

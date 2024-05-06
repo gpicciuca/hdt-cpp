@@ -1,4 +1,5 @@
 /* BitSequence375.cpp
+   Copyright (C) 2024, Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
    Copyright (C) 2005, Rodrigo Gonzalez, all rights reserved.
 
    New RANK, SELECT, SELECT-NEXT and SPARSE RANK implementations.

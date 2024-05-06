@@ -1,9 +1,10 @@
 /*
  * File: HDTManager.hpp
- * Last modified: $Date: 2012-08-21 21:15:01 +0100 (mar, 21 ago 2012) $
+ * Last modified: $Date$
  * Revision: $Revision: 250 $
- * Last modified by: $Author: mario.arias $
+ * Last modified by: $Author$
  *
+ * Copyright (C) 2024, Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
  * Copyright (C) 2012, Mario Arias, Javier D. Fernandez, Miguel A. Martinez-Prieto
  * All rights reserved.
  *
